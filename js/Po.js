@@ -45,31 +45,17 @@ function gotData(data)
     console.log('Number of children of 100 '+data.child("100").numChildren());
    // console.log('child values '+data.hasChild("104"));
 
-
-                for(var i = 0;i<3;i++)
-                      {
-                          data.child("102").forEach(function(item) {
-                         // console.log(item.child());
-                          var temp = item.val().Product_id;
-                          if(temp==2)
-                          {
-                            console.log("asd");
-                          }
-                       // console.log("Focus ::: "child.hasChild("Product_id").key("2") );
-                      
-                      
-                      
-
-              });
-                      
-
-
- }
-} 
-
-
-
     writeData();
+
+                
+                      
+
+
+ 
+    } 
+
+
+
     }
    
   
@@ -98,6 +84,7 @@ function writeData()
         Total_Price : tot_price[i+1] 
       });
   }
+  alert("Order Submitted Succesfully...!");
 }
 
 
