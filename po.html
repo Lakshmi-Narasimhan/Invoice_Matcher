@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Fancy Data Entry</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+      <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+html, body {
+  height: 100%;
+}
+
+body {
+  background: white;
+  font-family: 'Open Sans', Verdana;
+  color: #333;
+}
+
+a {
+  color: #00a0df;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.blue {
+  color: #00a0df;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+input[type="text"] {
+  display: inline-block;
+  padding: 5px;
+  margin-bottom: 1.2em;
+  outline: none;
+  font-weight: 600;
+  width: 250px;
+  position: relative;
+  border: 1px solid silver;
+  box-shadow: inset 0 5px 10px -8px #333;
+  border-radius: 3px;
+  transition: background 300ms ease;
+}
+input[type="text"]:focus {
+  border: 1px solid #00a0df;
+}
+input[type="text"].large {
+  width: 350px;
+}
+input[type="text"].small {
+  width: 50px;
+}
+input[type="text"].full {
+  width: 100%;
+}
+
+.user-info {
+  text-align: center;
+  width: 650px;
+  font-size: 0.8em;
+  margin: 50px auto;
+  position: relative;
+  box-shadow: 0 5px 10px -7px #333;
+  border-radius: 4px;
+}
+.user-info .col {
+  float: left;
+  width: 25%;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 8px;
+}
+.user-info .row {
+  overflow: hidden;
+  position: relative;
+}
+.user-info .row input {
+  text-align: center;
+  margin-bottom: 0;
+}
+.user-info .row input.full {
+  text-align: left;
+}
+.user-info i.clicked {
+  animation: spin 1s ease 2s;
+}
+
+#add-user {
+  display: block;
+  position: absolute;
+  font-size: 1.9em;
+  background: #47D147;
+  height: 35px;
+  width: 35px;
+  top: 42px;
+  right: -35px;
+  padding: 0;
+  line-height: 33px;
+  z-index: 0;
+  border-radius: 0 4px 4px 0;
+  box-shadow: inset 5px 0 10px -7px #333, inset 0 1px 0 0 #B5EDB5, 0 1px 0 0 #2E862E;
+  border: 1px solid #39A739;
+  outline: none;
+  color: white;
+  transition: background 300ms ease, right 300ms ease, text-shadow 200ms ease;
+}
+#add-user:active, #add-user:hover {
+  text-shadow: 0 0 10px white;
+}
+#add-user.hidden {
+  right: 1px;
+}
+
+.tb-header {
+  background: #00a0df;
+  color: white;
+  line-height: 1.5;
+  box-shadow: inset 0 -30px 30px -15px #0090C9;
+  border-radius: 4px 4px 0 0;
+  border: 1px solid #00709C;
+  border-top: 1px solid #0090C9;
+}
+.tb-header .col {
+  border-right: 1px solid #00709C;
+}
+.tb-header .col.last {
+  border-right: none;
+}
+
+.tb-entry {
+  background: #EFEFEF;
+  box-shadow: inset 0 -20px 20px -10px #CCC;
+  border: 1px solid silver;
+  border-bottom: 1px solid #AAA;
+  border-top: none;
+  height: 46px;
+  position: relative;
+}
+.tb-entry .col {
+  border-right: 1px solid silver;
+}
+.tb-entry .col.last {
+  border-right: none;
+}
+.tb-entry .cover {
+  height: 46px;
+  position: absolute;
+  width: 36px;
+  background: #EFEFEF;
+  box-shadow: inset 0 -20px 20px -10px #CCC;
+  right: 0px;
+  z-index: 2;
+}
+
+.tb-data {
+  background: #EFEFEF;
+  border: 1px solid silver;
+  box-shadow: inset 0 1px 0 0 white;
+  border-top: none;
+}
+.tb-data .col {
+  border-right: 1px solid #CCC;
+  transition: opacity 500ms ease;
+  min-height: 35px;
+}
+.tb-data .col.last {
+  border-right: none;
+}
+.tb-data.row-0 {
+  border-radius: 0 0 4px 4px;
+}
+.tb-data .data-options {
+  position: absolute;
+  text-align: right;
+  right: -200px;
+  transition: right 300ms ease;
+  z-index: 4;
+  top: -5px;
+}
+.tb-data .data-options li {
+  display: block;
+  float: left;
+  padding-right: 2em;
+  font-size: 1.2em;
+  font-weight: 700;
+}
+.pi-button, .raise-button {
+  letter-spacing: 1px;
+  font-size: 12px;
+  display: inline-block;
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  -webkit-transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
+  font-family: sans-serif;
+  cursor:pointer;
+  border: none;
+  padding: 12px 20px 12px 20px;
+  margin: 5px;
+  background-color: transparent;
+  text-align: center;
+  color: #444;
+}
+
+.pi-button:focus, .raise-button:focus {
+  outline: none;
+}
+
+.pi-button:hover {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.22), 0 4px 4px 0 rgba(0, 0, 0, 0.35);
+
+  color: #222;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.pi-button:active {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.44), 0 1px 1px 0 rgba(0, 0, 0, 0.68);
+}
+
+
+.pi-button:focus::before {
+  display: block;
+  height: 150px;
+  width: 150px;
+  top: -58px;
+  left: -30px;
+  opacity: 0;
+  content: "";
+  background: #AAA;
+  border-radius: 1000px;
+  position: absolute;
+  animation-name: fade;
+  animation-timing-function: ease-out;
+    animation-duration: 1s;
+  z-index: -2;
+}
+
+@keyframes fade {
+  0% {opacity: 1; transform: scale(0);}
+  50% {opacity: 1; transform: scale(1);}
+    100% {opacity: 0;}
+}
+
+
+.with-shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35), 0 1px 1px 0 rgba(0, 0, 0, 0.59);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.raise-button:hover {
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.3), 0 15px 15px 0 rgba(0, 0, 0, 0.4);
+  background-color: #FFF !important;
+  color: #222 !important;
+}
+
+.raise-button:active {
+  -webkit-transition: 0.05s ease-out;
+  transition: 0.05s ease-out;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.44), 0 1px 1px 0 rgba(0, 0, 0, 0.68);
+}
+#menuToggle
+{
+  display: block;
+  position: relative;
+  top: 50px;
+  left: 50px;
+  
+  z-index: 1;
+  
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+}
+
+#menuToggle input
+{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span
+{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: #cdcdcd;
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  -webkit-transform-origin: 4px 0px;
+  
+          transform-origin: 4px 0px;
+  
+  transition: background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease,
+              -webkit-transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease,
+              -webkit-transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menuToggle span:first-child
+{
+  -webkit-transform-origin: 0% 0%;
+          transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2)
+{
+  -webkit-transform-origin: 0% 100%;
+          transform-origin: 0% 100%;
+}
+
+/* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span
+{
+  opacity: 1;
+  -webkit-transform: rotate(45deg) translate(-2px, -1px);
+          transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked ~ span:nth-last-child(3)
+{
+  opacity: 0;
+  -webkit-transform: rotate(0deg) scale(0.2, 0.2);
+          transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked ~ span:nth-last-child(2)
+{
+  -webkit-transform: rotate(-45deg) translate(0, -1px);
+          transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+#menu
+{
+  position: absolute;
+  width: 300px;
+  margin: -100px 0 0 -50px;
+  padding: 50px;
+  padding-top: 125px;
+  
+  background: #ededed;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  -webkit-transform-origin: 0% 0%;
+  
+          transform-origin: 0% 0%;
+  -webkit-transform: translate(-100%, 0);
+          transform: translate(-100%, 0);
+  
+  transition: -webkit-transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), -webkit-transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li
+{
+  padding: 10px 0;
+  font-size: 22px;
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ ul
+{
+  -webkit-transform: none;
+          transform: none;
+}
+a
+{
+  text-decoration: none;
+  color: #232323;
+  
+  transition: color 0.3s ease;
+}
+
+a:hover
+{
+  color: tomato;
+}
+    </style>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+</head>
+
+<body>
+<nav role="navigation">
+  <div id="menuToggle">
+    <!--
+    A fake / hidden checkbox is used as click reciever,
+    so you can use the :checked selector on it.
+    -->
+    <input type="checkbox" />
+    
+    <!--
+    Some spans to act as a hamburger.
+    
+    They are acting like a real hamburger,
+    not that McDonalds stuff.
+    -->
+    <span></span>
+    <span></span>
+    <span></span>
+    
+    <!--
+    Too bad the menu has to be inside of the button
+    but hey, it's pure CSS magic.
+    -->
+    <ul id="menu">
+      <a href="po.html"><li>Order Submit</li></a>
+      <a href="Invoice.html"><li>Invoice Verification</li></a>
+      <a href="notifications.html"><li>Notifications</li></a>
+      <a href="#"><li>About</li></a>
+  
+  </div>
+</nav>
+  <div class="user-info">
+                
+  <div class="tb-header row">
+    <div class="col">
+      Product id
+    </div>
+    
+    <div class="col">
+      Product Name
+    </div>
+    
+    <div class="col">
+      Quantity
+    </div>
+    <div class="col last">
+      Price
+    </div>
+  
+  </div>
+  
+  <div class="tb-entry row">
+    <div class="cover"></div>
+    
+    <div class="col">
+      <input type="text" maxlength="5" id="Product_id" class="full">
+    </div>
+    
+    <div class="col">
+      <input type="text" maxlength="16" id="Product_name" class="small">
+    </div>
+    
+    <div class="col">
+      <input type="text" maxlength="5" id="Quantity" class="small">
+    </div>
+    <div class="col last">
+      <input type="text" maxlength="5" id="price" class="small">
+    </div>
+
+  
+     
+  </div>
+  
+  
+  
+  <button id="add-user">+</button>
+  <button onclick="sub()" class="raise-button with-shadow" style="background-color: #4CAF50; color: white;">Submit</button>
+</div>
+
+
+  
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDZxMalOPROrZ_D_qjqS3lVPOzeksMgrmo",
+    authDomain: "nufinanz.firebaseapp.com",
+    databaseURL: "https://nufinanz.firebaseio.com",
+    projectId: "nufinanz",
+    storageBucket: "",
+    messagingSenderId: "494186103495"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+ 
+
+  <script src="js/Po.js"></script>
+
+
+
+
+</body>
+
+</html>

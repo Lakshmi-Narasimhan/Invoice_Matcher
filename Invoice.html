@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Your Invoice</title>
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="css/Invoice_style.css">
+
+  
+</head>
+
+<body>
+<nav role="navigation">
+  <div id="menuToggle">
+    <!--
+    A fake / hidden checkbox is used as click reciever,
+    so you can use the :checked selector on it.
+    -->
+    <input type="checkbox" />
+    
+    <!--
+    Some spans to act as a hamburger.
+    
+    They are acting like a real hamburger,
+    not that McDonalds stuff.
+    -->
+    <span></span>
+    <span></span>
+    <span></span>
+    
+    <!--
+    Too bad the menu has to be inside of the button
+    but hey, it's pure CSS magic.
+    -->
+    <ul id="menu">
+      <a href="po.html"><li>Order Submit</li></a>
+      <a href="Invoice.html"><li>Invoice Verification</li></a>
+      <a href="notifications.html"><li>Notifications</li></a>
+      <a href="#"><li>About</li></a>
+  
+    </ul>
+  </div>
+</nav>
+  
+<div id="app">
+  <div class="container-responsive">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h4>Upload Data</h4>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h5>How to use:</h5>
+        <ol>
+          <ul>Create Excel file with data...</ul>
+          <ul>Drag Excel file to drop zone</ul>
+        </ol>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-md-4 col-md-offset-4">
+        <div id="drop" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">Drop Here</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <table class="table table-striped table-hover table-condensed table-responsive">
+          <thead>
+            <tr>
+              <th v-for="item in headers">{{item}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in tickets">
+              <td v-for="key in item">
+                <label>{{key}}</label>
+                <p>{{item.key}}</p>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <button onclick="sub()" class="raise-button with-shadow" style="background-color: #4CAF50; color: white;">Submit</button>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.3/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.full.min.js'></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDZxMalOPROrZ_D_qjqS3lVPOzeksMgrmo",
+    authDomain: "nufinanz.firebaseapp.com",
+    databaseURL: "https://nufinanz.firebaseio.com",
+    projectId: "nufinanz",
+    storageBucket: "",
+    messagingSenderId: "494186103495"
+  };
+  firebase.initializeApp(config);
+</script>
+  
+
+    <script  src="js/Invoice.js"></script>
+
+
+
+
+</body>
+
+</html>

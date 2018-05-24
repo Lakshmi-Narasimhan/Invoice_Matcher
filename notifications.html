@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive, Table-based Shopping Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="css/notifications.css">
+<style>
+#menu
+{
+  position: absolute;
+  width: 300px;
+  margin: -100px 0 0 -50px;
+  padding: 50px;
+  padding-top: 125px;
+  
+  background: #ededed;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  -webkit-transform-origin: 0% 0%;
+  
+          transform-origin: 0% 0%;
+  -webkit-transform: translate(-100%, 0);
+          transform: translate(-100%, 0);
+  
+  transition: -webkit-transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), -webkit-transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li
+{
+  padding: 10px 0;
+  font-size: 22px;
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ ul
+{
+  -webkit-transform: none;
+          transform: none;
+}
+a
+{
+  text-decoration: none;
+  color: #232323;
+  
+  transition: color 0.3s ease;
+}
+
+a:hover
+{
+  color: tomato;
+}
+    </style>
+  
+</head>
+
+<body>
+<nav role="navigation">
+  <div id="menuToggle">
+  
+    <input type="checkbox" />
+    
+   
+    <span></span>
+    <span></span>
+    <span></span>
+    
+    <!--
+    Too bad the menu has to be inside of the button
+    but hey, it's pure CSS magic.
+    -->
+    <ul id="menu">
+      <a href="po.html"><li>Order Submit</li></a>
+      <a href="Invoice.html"><li>Invoice Verification</li></a>
+      <a href="notifications.html"><li>Notifications</li></a>
+      <a href="#"><li>About</li></a>
+  
+    </ul>
+  </div>
+</nav>
+  
+<div class="container" id="main_div">
+  <h1>Earlier Charts</h1>
+  <table class="table table-xs" id="list">
+    <tr>
+       <h3 align=center>DESCRIPTION</h3>
+      
+    </tr>
+
+   
+  </table>
+</div>
+  
+<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDZxMalOPROrZ_D_qjqS3lVPOzeksMgrmo",
+    authDomain: "nufinanz.firebaseapp.com",
+    databaseURL: "https://nufinanz.firebaseio.com",
+    projectId: "nufinanz",
+    storageBucket: "",
+    messagingSenderId: "494186103495"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+ 
+
+  <script src="js/notifications.js"></script>
+
+</body>
+
+</html>
