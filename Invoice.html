@@ -8,7 +8,85 @@
 
       <link rel="stylesheet" href="css/Invoice_style.css">
 
-  
+  <style type="text/css">
+    .pi-button, .raise-button {
+  letter-spacing: 1px;
+  font-size: 12px;
+  display: inline-block;
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  -webkit-transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
+  font-family: sans-serif;
+  cursor:pointer;
+  border: none;
+  padding: 12px 20px 12px 20px;
+  margin: 5px;
+  background-color: transparent;
+  text-align: center;
+  color: #444;
+}
+
+.pi-button:focus, .raise-button:focus {
+  outline: none;
+}
+
+.pi-button:hover {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.22), 0 4px 4px 0 rgba(0, 0, 0, 0.35);
+
+  color: #222;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.pi-button:active {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.44), 0 1px 1px 0 rgba(0, 0, 0, 0.68);
+}
+
+
+.pi-button:focus::before {
+  display: block;
+  height: 150px;
+  width: 150px;
+  top: -58px;
+  left: -30px;
+  opacity: 0;
+  content: "";
+  background: #AAA;
+  border-radius: 1000px;
+  position: absolute;
+  animation-name: fade;
+  animation-timing-function: ease-out;
+    animation-duration: 1s;
+  z-index: -2;
+}
+
+@keyframes fade {
+  0% {opacity: 1; transform: scale(0);}
+  50% {opacity: 1; transform: scale(1);}
+    100% {opacity: 0;}
+}
+
+
+.with-shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35), 0 1px 1px 0 rgba(0, 0, 0, 0.59);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.raise-button:hover {
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.3), 0 15px 15px 0 rgba(0, 0, 0, 0.4);
+  background-color: #FFF !important;
+  color: #222 !important;
+}
+
+.raise-button:active {
+  -webkit-transition: 0.05s ease-out;
+  transition: 0.05s ease-out;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.44), 0 1px 1px 0 rgba(0, 0, 0, 0.68);
+}
+  </style>
 </head>
 
 <body>
@@ -45,19 +123,15 @@
 </nav>
   
 <div id="app">
-  <div class="container-responsive">
+  <div class="container">
     <div class="row">
       <div class="col-md-12 text-center">
-        <h4>Upload Data</h4>
+        <h3>Upload Data</h3>
       </div>
     </div>
-    <div class="row text-center">
+    <div class="text-center">
       <div class="col-md-12">
-        <h5>How to use:</h5>
-        <ol>
-          <ul>Create Excel file with data...</ul>
-          <ul>Drag Excel file to drop zone</ul>
-        </ol>
+        
       </div>
     </div>
     <div class="row text-center">
@@ -88,7 +162,9 @@
   </div>
 </div>
 
+<div class="container col-md-12 text-center">
   <button onclick="sub()" class="raise-button with-shadow" style="background-color: #4CAF50; color: white;">Submit</button>
+</div>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.3/vue.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.full.min.js'></script>
 <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
