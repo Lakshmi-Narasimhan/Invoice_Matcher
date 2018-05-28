@@ -62,7 +62,8 @@ function gotData(data)
                           var temp = item.val();
                           if(temp.Product_id==id[i])
                           {
-                            flag=0;
+			    if(flag!=1)  
+                            	flag=0;
                             if(temp.Product_name != pname[i])
                              {
                                 console.log("Mismatch in Name of Product_id : ",id[i]);
